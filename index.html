@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<meta charset="UTF-8">
+<head>
+<style>
+table, th, td {
+  border: 1px solid green;
+  border-collapse: collapse;
+}
+hr{
+border: 1px solid green;
+border-collapse: collapse;
+}
+.contentor{
+background-image:url("minhas_img/fundo_pagina/fundo.webp");
+text-align:center;
+}
+.formato_tabela{
+text-align: center;
+font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, "sans-serif";
+font-size: 12px;
+border-radius: 8px;
+align-content: center;
+margin-left: auto;
+margin-right: auto;
+}
+.largura_colunas_tabela{
+width: 120px;
+}
+.linhas_tabela{
+background-color:#C3C3C3;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+<title>Login</title>
+<link rel="icon" type="image/x-icon" href="chave.ico">
+	<script type="text/javascript">
+	var utilizadores=[];
+	utilizadores=["Admin", "jose", "Carlos"];
+	var pass=[];
+	pass=["123", "abc", "efd"];
+	var tentativas=5;
+	var permissao=[];
+	permissao[0]="Administrador";
+	permissao[1]="Colaborador";
+	permissao[2]="Administrador";
+	var nome=[];
+	nome[0]="Américo";
+	nome[1]="José";
+	nome[2]="Carlos";
+	</script>
+	<script src="meus_javascript/testa_utilizador.js"></script>
+	<script src="meus_javascript/cria_utilizador.js"></script>
+	<script src="meus_javascript/timer_limpa_caixas_input.js"></script>
+	<script type="text/javascript">
+	
+	function selecionarUtilizador()
+	{
+		for(var i=0; i<utilizadores.length; i++)
+		{
+			if(document.getElementById("users_select").value==utilizadores[i])
+			{
+				document.getElementById("nome_user").value=utilizadores[i];
+				document.getElementById("pass_user").value=pass[i];
+				document.getElementById("tentativas_user").value=tentativas;
+				document.getElementById("permissao_user").value=permissao[i];
+			}
+		}
+	}
+	</script>
+</head>
+<body class="contentor">
+<div>
+<input onkeypress="contagem_decrescente()" type="text" placeholder="Utilizador" id="user">
+<br>
+<br>
+<input onkeypress="contagem_decrescente()" type="password" placeholder="Palavra-passe" id="pass">
+<br>
+<br>
+<button type="button" onClick="test_user()">Entrar</button>
+<br>
+<br>
+<button type="button" onClick="criar_user()" id="criar">Registar novo utilizador</button>
+<div id="criarUtilizador" class="modal">
+	<div id="comoCriar" class="modal-content">
+		<span class="close">&times;</span>
+		<input type="text" placeholder="Utilizador" id="nomeUtilizador" name="nomeUtilizador">
+		<br>
+		<br>
+		<input type="text" placeholder="Palavra-passe" id="passUtilizador" name="passUtilizador">
+		<br>
+		<br>
+		<input type="text" placeholder="Permissão" id="permissaoUtilizador" name="permissaoUtilizador">
+		<br>
+		<br>
+		<input type="text" placeholder="Nome" id="nomeRealUtilizador" name="nomeRealUtilizador">
+		<br>
+		<br>
+		<button type="button" onClick="verificar_criar_user()" id="verificar">Confirmar</button>
+		<br>
+		<br>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<table id="tabela_utilizadores" class="formato_tabela">
+  <tr style="background-color:#A2A2A2">
+    <th class="largura_colunas_tabela">Utilizador</th>
+    <th class="largura_colunas_tabela">Palavra-passe</th>
+	<th class="largura_colunas_tabela">Número de tentativas</th>
+	<th class="largura_colunas_tabela">Nome</th>
+	<th class="largura_colunas_tabela">Permissão</th>
+	<th class="largura_colunas_tabela">Data de registo</th>
+  </tr>
+	<script type="text/javascript">
+		var table=document.getElementById("tabela_utilizadores");
+		for(var i=0; i<utilizadores.length; i++)
+		{
+			var row = table.insertRow(i+1);
+			if((i+1)%2==0)
+			{
+				row.className="linhas_tabela";
+			}
+			var cell0 = row.insertCell(0);
+			var cell1 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
+			var cell3 = row.insertCell(3);
+			var cell4 = row.insertCell(4);
+			var cell5 = row.insertCell(5);
+			cell0.innerHTML = utilizadores[i];
+			cell1.innerHTML = pass[i];
+			cell2.innerHTML = tentativas;
+			cell3.innerHTML = nome[i];
+			cell4.innerHTML = permissao[i];
+			cell5.innerHTML = "";
+		}
+	</script>
+</table>
+<br><br>
+<hr style="border-color: #0F42DA">
+<br><br>
+<h1>Consulta de Utilizadores</h1>
+<form>
+  <label for="users_select">Utilizadores:</label>
+  <select name="users_select" id="users_select" onChange="selecionarUtilizador()">
+	<option value="" disabled selected hidden>Escolha uma opção</option>
+  </select>
+  <script type="text/javascript">
+  	var x = document.getElementById("users_select");
+	for(var i=0; i<utilizadores.length; i++)
+	{
+		var option = document.createElement("option");
+		option.text = utilizadores[i];
+		x.add(option);
+	}
+  </script>
+  <!--<input type="submit" value="Submit">-->
+</form>
+<br><br>
+<input type="text" placeholder="Utilizador" id="nome_user" name="nome_user">
+<br><br>
+<input type="text" placeholder="Palavra-passe" id="pass_user" name="pass_user">
+<br><br>
+<input type="text" placeholder="Tentativas" id="tentativas_user" name="tentativas_user">
+<br><br>
+<input type="text" placeholder="Permissão" id="permissao_user" name="permissao_user">
+<br><br>
+<input type="text" placeholder="Data registo" id="data_registo_user" name="data_registo_user">
+<br><br>
+</div>
+</body>
+</html>
